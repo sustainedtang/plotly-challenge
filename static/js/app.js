@@ -1,9 +1,9 @@
-function buildData(sample) {
+function buildMetadata(sample) {
      //Use D3 fetch to read JSON file
     d3.json("samples.json").then((importedData) => {
         console.log(importedData);
-        var data = importedData.metadata;
-        var array = metadata.filter(sampleobject => sampleobject.id == sample);
+        var metadata = importedData.metadata;
+        var resultsarray = metadata.filter(sampleobject => sampleobject.id == sample);
         var result = array[0]
         var panel = d3.select("#sample-metadata");
         panel.html("");
@@ -23,14 +23,14 @@ function buildCharts(sample) {
         var ids = result.otu_ids;
         var labels = result.sample_values;
     
-        var layoutBubble = {
+        var LayoutBubble = {
             margin: { t: 0 },
             xaxis: { title: "OTU ID"}
             hovermode: "closest",
 
         };
 
-            var dataBubble = [
+            var DataBubble = [
                 { 
                     x: ids,
                     y: values,
@@ -42,7 +42,7 @@ function buildCharts(sample) {
                     }
             }];
         
-        Plotly.newplot("bubble", dataBubble, layoutBubble);
+        Plotly.newplot("bubble", DataBubble, LayoutBubble);
     });
 };
 
