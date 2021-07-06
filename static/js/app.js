@@ -4,14 +4,14 @@ function buildMetadata(sample) {
         console.log(importedData);
         var metadata = importedData.metadata;
         var resultsarray = metadata.filter(sampleobject => sampleobject.id == sample);
-        var result = array[0]
+        var result = resultsarray[0]
         var panel = d3.select("#sample-metadata");
         panel.html("");
         Object.entries(result).forEach(([key, value]) => {
             panel.append("h6").text(`${key}: ${value}`);
         });
-})
-}
+});
+};
 
 // Import variables from json
 function buildCharts(sample) {
@@ -20,16 +20,20 @@ function buildCharts(sample) {
         var resultsarray = samples.filter(sampleobject =>
             sampleobject.id == sample);
         var result = resultsarray[0]
+
         var ids = result.otu_ids;
-        var labels = result.sample_values;
-    
+        var labels = result.otu_labels;
+        var values = result.sample_values;
+        
+        
         var LayoutBubble = {
             margin: { t: 0 },
-            xaxis: { title: "OTU ID"}
+            xaxis: { title: "OTU ID"},
             hovermode: "closest",
 
         };
-
+    
+    
             var DataBubble = [
                 { 
                     x: ids,
@@ -40,11 +44,12 @@ function buildCharts(sample) {
                         color: ids, 
                         size: values,
                     }
-            }];
+            }
+        ];
         
-        Plotly.newplot("bubble", DataBubble, LayoutBubble);
+        Plotly.newPlot("bubble", DataBubble, LayoutBubble);
     });
-};
+}
 
 function init() {
 
@@ -62,13 +67,13 @@ d3.json("samples.json").then((data) => {
 
     const firstSample = sampleNames[0];
     buildCharts(firstSample);
-    build
+    buildMetadata(firstSample);
 });
-}
+};
 
 function optionChanged(newSample) {
 buildCharts(newSample);
 buildMetadata(newSample);
-}
+};
 
 init();
