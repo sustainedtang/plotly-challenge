@@ -1,7 +1,8 @@
+//Import json metadata
 function buildMetadata(sample) {
      //Use D3 fetch to read JSON file
     d3.json("samples.json").then((importedData) => {
-        console.log(importedData);
+        // console.log(importedData);
         var metadata = importedData.metadata;
         var resultsarray = metadata.filter(sampleobject => sampleobject.id == sample);
         var result = resultsarray[0]
@@ -13,6 +14,8 @@ function buildMetadata(sample) {
 });
 };
 
+
+//Bubble Chart
 // Import variables from json
 function buildCharts(sample) {
     d3.json("samples.json").then((data) => {
@@ -48,7 +51,28 @@ function buildCharts(sample) {
         ];
         
         Plotly.newPlot("bubble", DataBubble, LayoutBubble);
-    });
+    
+
+//Bar Chart
+
+var barData = [
+    {
+        y:ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse(),
+        x:values.slice(0,10).reverse(),
+        text:labels.slice(0,10).reverse(),
+        type:"bar",
+        orientation:"h"   
+    }
+];
+
+var barLayout = {
+    title: "Top 10 Bacteria",
+    margin: { t: 30, l: 150 }
+};
+
+    Plotly.newPlot("bar", barData, barLayout);
+    
+});
 }
 
 function init() {
