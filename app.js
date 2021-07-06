@@ -1,13 +1,15 @@
- function buildData(sample) {
+function buildData(sample) {
      //Use D3 fetch to read JSON file
-     d3.json("samples.json").then((importedData) => {
+    d3.json("samples.json").then((importedData) => {
         console.log(importedData);
         var data = importedData.metadata;
         var array = metadata.filter(sampleobject => sampleobject.id == sample);
         var result = array[0]
         var panel = d3.select("#sample-metadata");
         panel.html("");
-        
+        Object.entries(result).forEach(([key, value]) => {
+            panel.append("h6").text(`${key}: ${value}`);
+        });
 })
 }
 
@@ -61,5 +63,12 @@ d3.json("samples.json").then((data) => {
     const firstSample = sampleNames[0];
     buildCharts(firstSample);
     build
-})
+});
 }
+
+function optionChanged(newSample) {
+buildCharts(newSample);
+buildMetadata(newSample);
+}
+
+init();
