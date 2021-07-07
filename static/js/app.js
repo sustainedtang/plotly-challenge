@@ -66,8 +66,8 @@ var barData = [
 ];
 
 var barLayout = {
-    title: "Top 10 Bacteria",
-    margin: { t: 30, l: 150 }
+    title: "Top 10 Bacteria Cultures Found",
+    margin: { t: 50, l: 250 }
 };
 
     Plotly.newPlot("bar", barData, barLayout);
